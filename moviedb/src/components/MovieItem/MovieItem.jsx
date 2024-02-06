@@ -31,7 +31,10 @@ export default class MovieItem extends Component {
       newTime = new Date(release_date)
       date = format(newTime, 'MMMM d, yyyy')
     }
-    const imageURL = `https://image.tmdb.org/t/p/w300${poster_path}`
+    let imageURL = `https://image.tmdb.org/t/p/w300${poster_path}`
+    if (!poster_path) {
+      imageURL = 'https://www.flaticon.com/ru/free-icons/-'
+    }
     return (
       <li key={id}>
         <Card
