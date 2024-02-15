@@ -1,10 +1,27 @@
-.movie-list{
+.movies-list{
+    padding: 20px 0 17px 0;
+}
+.movies-list__wrapper{
+    margin: 0 auto;
+    width: 939px;
+}
+.movies-list__ul{
     margin: 0;
     padding: 0;
     list-style: none;
     display: grid;
-    grid-template-columns: 451px 451px;
+    grid-template-columns: 1fr 1fr;
     gap: 37px;
     justify-content: center;
-    padding: 23px 0;
+    padding: 37px 0;
+}
+.movies-list__input{
+    height: 40px;
+    margin: 0 auto;
+    font-size: 16px;
+    color: rgba(0, 0, 0, 0.25);
+    display: block;
+}
+.movies-list__pagination{
+    text-align: center;
 }

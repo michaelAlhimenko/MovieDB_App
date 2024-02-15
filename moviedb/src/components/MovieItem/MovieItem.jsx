@@ -7,6 +7,12 @@ const { Title, Paragraph } = Typography
 import './index.css'
 
 export default class MovieItem extends Component {
+  constructor() {
+    super()
+    this.state = {
+      image: null,
+    }
+  }
   shortenText(text, maxLength) {
     if (text.length <= maxLength) {
       return text
@@ -24,14 +30,17 @@ export default class MovieItem extends Component {
 
   render() {
     const { title, id, overview, release_date, poster_path } = this.props.data
-    const textOverview = this.shortenText(overview, 200)
+    const croppedOverview = this.shortenText(overview, 200)
+    const croppedTitle = this.shortenText(title, 40)
     let date = undefined
     let newTime = undefined
+
     if (release_date) {
       newTime = new Date(release_date)
       date = format(newTime, 'MMMM d, yyyy')
     }
     let imageURL = `https://image.tmdb.org/t/p/w300${poster_path}`
+
     if (!poster_path) {
       imageURL = 'https://www.flaticon.com/ru/free-icons/-'
     }
@@ -45,11 +54,11 @@ export default class MovieItem extends Component {
           cover={<img style={{ borderRadius: 0 }} src={imageURL} />}
         >
           <Title className="movie-item-title" level={5}>
-            {title}
+            {croppedTitle}
           </Title>
           <Paragraph className="movie-item-data">{date}</Paragraph>
           <Tag className="movie-item-tag">Action</Tag> <Tag className="movie-item-tag">Drama</Tag>
-          <Paragraph className="movie-item-overview">{textOverview}</Paragraph>
+          <Paragraph className="movie-item-overview">{croppedOverview}</Paragraph>
           <Rate count={10}></Rate>
         </Card>
       </li>
