@@ -12,9 +12,7 @@ const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
   <React.Fragment>
     <Online>
-      <React.StrictMode>
-        <App />
-      </React.StrictMode>
+      <App />
     </Online>
     <Offline>
       <div className="offline">

@@ -25,3 +25,33 @@
 .movies-list__pagination{
     text-align: center;
 }
+@media(max-width:991px){
+    .movies-list__wrapper{
+        width: 768px;
+    }
+}
+@media(max-width:768px){
+    .movies-list__wrapper{
+        width: 100%;
+    }
+    .movies-list {
+        padding: 15px 10px 15px 10px;
+      }
+}
+@media (max-width: 500px) {
+    .app{
+      width: 450px;
+    }
+    .movies-list__wrapper{
+        width: 100%;
+    }
+    .movies-list__ul{
+        display: block;
+    }
+    .movies-list{
+        padding: 10px 17px 17px 17px;
+    }
+    .movies-list__ul{
+        padding: 10px 0 20px 0;
+    }
+  }

@@ -1,14 +1,11 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Spin, Alert, Pagination, Input } from 'antd'
-import { debounce } from 'lodash'
+import { Spin, Alert, Pagination } from 'antd'
 
 import Services from '../../services/services.js'
 import MovieItem from '../MovieItem/MovieItem.jsx'
 
-import './index.css'
-
-export default class MovieList extends Component {
+export default class RatedMovieList extends Component {
   static defaultProps = {
     guestSessionId: '',
   }
@@ -19,52 +16,36 @@ export default class MovieList extends Component {
     super()
     this.state = {
       data: [],
-      loading: false,
+      loading: true,
       error: false,
       page: 1,
-      name: '',
       errorLoad: '',
     }
     this.totalMovie = 0
   }
   componentDidMount() {
     this.movieService = new Services()
-    this.search = debounce((name, page) => this.onMovieLoad(name, page), 500)
+    this.onMovieLoad(this.props.guestSessionId, this.state.page)
   }
 
   componentDidUpdate(prevProp, prevState) {
     if (prevState.page !== this.state.page) {
-      this.search(this.state.name, this.state.page)
-    }
-    if (prevState.name !== this.state.name) {
-      this.search(this.state.name, this.state.page)
-      this.setState({
-        page: 1,
-      })
+      this.onMovieLoad(this.props.guestSessionId, this.state.page)
     }
   }
 
-  onMovieLoad = async (name, page) => {
+  onMovieLoad = async (sessionId, page) => {
     try {
-      if (name.length === 0) {
+      let data = await this.movieService.getRatedMovies(sessionId, page)
+      const { results, total_results } = data
+      if (results.length === 0) {
         this.setState({
-          errorLoad: '',
+          errorLoad: 'Вы не оценивали фильмы',
           loading: false,
           data: [],
         })
       } else {
-        let data = await this.movieService.getListFilmsByNameAndPage(name, page)
-
-        const { results, total_results } = data
-        if (results.length === 0) {
-          this.setState({
-            errorLoad: 'Не найдено фильмов по вашему запросу',
-            loading: false,
-            data: [],
-          })
-        } else {
-          this.updateState(results, total_results)
-        }
+        this.updateState(results, total_results)
       }
     } catch (error) {
       this.onError()
@@ -78,11 +59,11 @@ export default class MovieList extends Component {
     })
   }
 
-  updateState = (name, total_results) => {
+  updateState = (results, total_results) => {
     this.totalMovie = total_results
     this.setState({
       error: false,
-      data: name,
+      data: results,
       loading: false,
       errorLoad: '',
     })
@@ -95,19 +76,11 @@ export default class MovieList extends Component {
     })
   }
 
-  onSearchMovie = (e) => {
-    this.setState({
-      name: e.target.value,
-      loading: true,
-    })
-  }
-
   render() {
     let { data, loading, error, page, errorLoad } = this.state
-
     const { guestSessionId } = this.props
     const hasData = !(loading || error || errorLoad)
-    const errorMess = error ? <Alert type="error" message="Couldn't upload" showIcon /> : null
+    const errorMess = error ? <Alert type="error" message="Вы не оценивали фильмы" showIcon /> : null
     const spiner = loading ? <Spin size="large" /> : null
     const errorLoading = errorLoad.length ? <Alert type="error" message={errorLoad} showIcon /> : null
 
@@ -131,12 +104,6 @@ export default class MovieList extends Component {
     return (
       <section className="movies-list">
         <div className="movies-list__wrapper">
-          <Input
-            className="movies-list__input"
-            value={this.state.name}
-            placeholder="Введите название фильма"
-            onChange={(e) => this.onSearchMovie(e)}
-          ></Input>
           {spiner}
           <ul className={!hasData ? '' : 'movies-list__ul'}>{content}</ul>
           {errorMess}

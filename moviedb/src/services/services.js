@@ -8,12 +8,43 @@ export default class Services {
       },
     })
     if (!res.ok) {
-      throw new Error('Could not fetch')
+      throw new Error('Не удалось выполнить запрос')
     }
     return await res.json()
   }
   async getListFilmsByNameAndPage(name, page) {
     const res = await this.getResource(name, page)
     return res
+  }
+  async getRatedMovies(guestSessionId, page) {
+    const URL = `https://api.themoviedb.org/3/guest_session/${guestSessionId}/rated/movies?api_key=c3d345e4c272d321ca279411b8ea1fdc&language=en-US&page=${page}&sort_by=created_at.asc`
+    const res = await fetch(URL, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+      },
+    })
+
+    if (!res.ok) {
+      throw new Error('Не удалось получить список оцененных фильмов')
+    }
+
+    const data = await res.json()
+    return data
+  }
+  async getGenreOfMovie() {
+    const URL = 'https://api.themoviedb.org/3/genre/movie/list?api_key=c3d345e4c272d321ca279411b8ea1fdc&language=en-US'
+    const res = await fetch(URL, {
+      merhod: 'GET',
+      headers: {
+        Accept: 'application/json',
+      },
+    })
+
+    if (!res.ok) {
+      throw new Error('Не удалось выполнить запрос')
+    }
+    const data = await res.json()
+    return data
   }
 }
