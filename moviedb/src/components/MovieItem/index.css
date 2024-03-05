@@ -71,15 +71,18 @@
   :where(.css-dev-only-do-not-override-1b0bdye).ant-rate .ant-rate-star:not(:last-child) {
     margin-inline-end: 2.5px;
   }
+  :where(.css-1b0bdye).ant-rate .ant-rate-star:not(:last-child) {
+    margin-inline-end: 2.2px;
+  }
   div:where(.css-dev-only-do-not-override-1b0bdye).ant-typography, :where(.css-dev-only-do-not-override-1b0bdye).ant-typography p {
     margin-bottom: 7px;
   }
-
   :where(.css-dev-only-do-not-override-1b0bdye).ant-spin-spinning {
     position: absolute;
     top: 50vh;
     left: 50%;
   }
+    
   @media (max-width: 991px){
     .movie-item-card{
       display: block;
