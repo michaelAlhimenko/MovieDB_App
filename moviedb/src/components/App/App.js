@@ -16,6 +16,7 @@ export default class App extends Component {
       page: 1,
       ratedFilms: [],
       genre: null,
+      nameFilm: '',
     }
   }
   componentDidMount() {
@@ -39,11 +40,21 @@ export default class App extends Component {
       page: e,
     })
   }
+  onNameFilm = (name) => {
+    this.setState({
+      nameFilm: name,
+    })
+  }
   render() {
     const { page, guestSessionId } = this.state
     const list =
       page === 1 ? (
-        <MovieList guestSessionId={guestSessionId} genre={this.state.genre} />
+        <MovieList
+          onNameFilm={this.onNameFilm}
+          nameFilm={this.state.nameFilm}
+          guestSessionId={guestSessionId}
+          genre={this.state.genre}
+        />
       ) : (
         <RatedMovieList guestSessionId={guestSessionId} page={this.state.page} genre={this.state.genre} />
       )
