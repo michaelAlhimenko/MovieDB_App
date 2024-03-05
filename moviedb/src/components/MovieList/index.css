@@ -25,6 +25,11 @@
 .movies-list__pagination{
     text-align: center;
 }
+.movie-list__spiner{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+}
 @media(max-width:991px){
     .movies-list__wrapper{
         width: 768px;
