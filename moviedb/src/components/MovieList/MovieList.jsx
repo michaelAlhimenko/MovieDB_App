@@ -11,9 +11,11 @@ import './index.css'
 export default class MovieList extends Component {
   static defaultProps = {
     guestSessionId: '',
+    nameFilm: '',
   }
   static propTypes = {
     guestSessionId: PropTypes.string,
+    nameFilm: PropTypes.string,
   }
   constructor() {
     super()
@@ -30,6 +32,9 @@ export default class MovieList extends Component {
   componentDidMount() {
     this.movieService = new Services()
     this.search = debounce((name, page) => this.onMovieLoad(name, page), 500)
+    this.setState({
+      name: this.props.nameFilm,
+    })
   }
 
   componentDidUpdate(prevProp, prevState) {
@@ -43,7 +48,9 @@ export default class MovieList extends Component {
       })
     }
   }
-
+  componentWillUnmount() {
+    this.props.onNameFilm(this.state.name)
+  }
   onMovieLoad = async (name, page) => {
     try {
       if (name.length === 0) {
