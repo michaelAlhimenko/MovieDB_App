@@ -81,7 +81,7 @@ export default class RatedMovieList extends Component {
     const { guestSessionId } = this.props
     const hasData = !(loading || error || errorLoad)
     const errorMess = error ? <Alert type="error" message="Вы не оценивали фильмы" showIcon /> : null
-    const spiner = loading ? <Spin size="large" /> : null
+    const spiner = loading ? <Spin className="movie-list__spiner" size="large" /> : null
     const errorLoading = errorLoad.length ? <Alert type="error" message={errorLoad} showIcon /> : null
 
     const content = hasData
