@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Spin, Alert, Pagination, Input } from 'antd'
@@ -112,14 +113,14 @@ export default class MovieList extends Component {
   render() {
     let { data, loading, error, page, errorLoad } = this.state
 
-    const { guestSessionId } = this.props
+    const { guestSessionId, onRatedFilms, ratedFilms } = this.props
     const hasData = !(loading || error || errorLoad)
     const errorMess = error ? <Alert type="error" message="Couldn't upload" showIcon /> : null
     const spiner = loading ? <Spin className="movie-list__spiner" size="large" /> : null
     const errorLoading = errorLoad.length ? <Alert type="error" message={errorLoad} showIcon /> : null
 
     const content = hasData
-      ? data.map((item) => <MovieItem key={item.id} data={item} guestSessionId={guestSessionId} />)
+      ? data.map((item) => <MovieItem key={item.id} data={item} guestSessionId={guestSessionId} ratedFilms={ratedFilms} onRatedFilms={onRatedFilms}/>)
       : null
 
     const pagination =
