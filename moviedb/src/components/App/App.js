@@ -45,18 +45,34 @@ export default class App extends Component {
       nameFilm: name,
     })
   }
+  onRatedFilms = (num, id) => {
+    this.setState((state) => {
+      const newItem = { id: id, rate: num }
+      return {
+        ratedFilms: [...state.ratedFilms, newItem],
+      }
+    })
+  }
   render() {
-    const { page, guestSessionId } = this.state
+    const { page, guestSessionId, ratedFilms } = this.state
+
     const list =
       page === 1 ? (
         <MovieList
+          onRatedFilms={this.onRatedFilms}
+          ratedFilms={ratedFilms}
           onNameFilm={this.onNameFilm}
           nameFilm={this.state.nameFilm}
           guestSessionId={guestSessionId}
           genre={this.state.genre}
         />
       ) : (
-        <RatedMovieList guestSessionId={guestSessionId} page={this.state.page} genre={this.state.genre} />
+        <RatedMovieList
+          guestSessionId={guestSessionId}
+          page={this.state.page}
+          genre={this.state.genre}
+          ratedFilms={ratedFilms}
+        />
       )
 
     return (
