@@ -78,15 +78,14 @@ export default class RatedMovieList extends Component {
 
   render() {
     let { data, loading, error, page, errorLoad } = this.state
-    const { guestSessionId } = this.props
+    const { guestSessionId, ratedFilms } = this.props
     const hasData = !(loading || error || errorLoad)
     const errorMess = error ? <Alert type="error" message="Вы не оценивали фильмы" showIcon /> : null
     const spiner = loading ? <Spin className="movie-list__spiner" size="large" /> : null
     const errorLoading = errorLoad.length ? <Alert type="error" message={errorLoad} showIcon /> : null
 
-    const content = hasData
-      ? data.map((item) => <MovieItem key={item.id} data={item} guestSessionId={guestSessionId} />)
-      : null
+    // eslint-disable-next-line prettier/prettier
+    const content = hasData ? data.map((item) => <MovieItem key={item.id} data={item} guestSessionId={guestSessionId} ratedFilms={ratedFilms} />) : null
 
     const pagination =
       hasData && data.length > 0 ? (
