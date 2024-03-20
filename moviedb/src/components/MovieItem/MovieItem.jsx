@@ -64,7 +64,7 @@ export default class MovieItem extends Component {
     this.props.onRatedFilms(num, id)
     this.toRate(num, id, guestSessionId)
   }
-   tagsGenre() {
+  tagsGenre() {
     const { genre_ids } = this.props.data
     if (genre_ids.length > 3) {
       genre_ids.splice(1, 3)
