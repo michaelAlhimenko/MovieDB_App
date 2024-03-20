@@ -59,8 +59,9 @@ export default class MovieItem extends Component {
     }
     return color
   }
-  rate(num, id) {
+  rate = (num, id) => {
     const { guestSessionId } = this.props
+    this.props.onRatedFilms(num, id)
     this.toRate(num, id, guestSessionId)
   }
   tagsGenre() {
@@ -82,6 +83,8 @@ export default class MovieItem extends Component {
 
   render() {
     const { title, id, overview, release_date, poster_path, vote_average, rating } = this.props.data
+    const { ratedFilms } = this.props
+
     const croppedOverview = this.shortenText(overview, 230)
     const croppedTitle = this.shortenText(title, 22)
     let date = undefined
@@ -92,8 +95,11 @@ export default class MovieItem extends Component {
     }
 
     const ratingOfMovie = () => {
+      const rate = ratedFilms.find((e) => id === e.id)
       if (rating) {
         return <Rate disabled={false} value={rating} count={10} onChange={(e) => this.rate(e, id)}></Rate>
+      } else if (rate) {
+        return <Rate disabled={false} value={rate.rate} count={10} onChange={(e) => this.rate(e, id)}></Rate>
       }
       return <Rate count={10} onChange={(e) => this.rate(e, id)}></Rate>
     }
@@ -139,3 +145,4 @@ export default class MovieItem extends Component {
     )
   }
 }
+
