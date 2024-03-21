@@ -99,9 +99,9 @@ export default class MovieItem extends Component {
     const ratingOfMovie = () => {
       const rate = ratedFilms.find((e) => id === e.id)
       if (rating) {
-        return <Rate disabled={false} value={rating} count={10} onChange={(e) => this.rate(e, id)}></Rate>
+        return <Rate disabled={true} value={rating} count={10} onChange={(e) => this.rate(e, id)}></Rate>
       } else if (rate) {
-        return <Rate disabled={false} value={rate.rate} count={10} onChange={(e) => this.rate(e, id)}></Rate>
+        return <Rate disabled={false} defaultValue={rate.rate} count={10} onChange={(e) => this.rate(e, id)}></Rate>
       }
       return <Rate count={10} onChange={(e) => this.rate(e, id)}></Rate>
     }
