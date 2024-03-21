@@ -31,11 +31,12 @@ export default class MovieList extends Component {
     this.totalMovie = 0
   }
   componentDidMount() {
-    this.movieService = new Services()
-    this.search = debounce((name, page) => this.onMovieLoad(name, page), 500)
     this.setState({
+      page: this.props.currentPage,
       name: this.props.nameFilm,
     })
+    this.movieService = new Services()
+    this.search = debounce((name, page) => this.onMovieLoad(name, page), 500)
   }
 
   componentDidUpdate(prevProp, prevState) {
@@ -44,13 +45,17 @@ export default class MovieList extends Component {
     }
     if (prevState.name !== this.state.name) {
       this.search(this.state.name, this.state.page)
-      this.setState({
-        page: 1,
-      })
+      this.props.onCurrentPage(1)
+      if ( this.props.currentPage === 1) {
+        this.setState({
+          page: 1,
+        })
+      }
     }
   }
   componentWillUnmount() {
     this.props.onNameFilm(this.state.name)
+    this.props.onCurrentPage(this.state.page)
   }
   onMovieLoad = async (name, page) => {
     try {
