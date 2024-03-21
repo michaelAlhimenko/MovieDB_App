@@ -54,8 +54,9 @@ export default class App extends Component {
   onRatedFilms = (num, id) => {
     this.setState((state) => {
       const newItem = { id: id, rate: num }
+      const newArray = state.ratedFilms.filter((element) => element.id !== id)
       return {
-        ratedFilms: [...state.ratedFilms, newItem],
+        ratedFilms: [...newArray, newItem],
       }
     })
   }
