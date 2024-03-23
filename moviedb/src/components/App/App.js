@@ -62,7 +62,6 @@ export default class App extends Component {
   }
   render() {
     const { page, guestSessionId, ratedFilms, currentPage } = this.state
-    console.log(currentPage)
     const list =
       page === 1 ? (
         <MovieList
